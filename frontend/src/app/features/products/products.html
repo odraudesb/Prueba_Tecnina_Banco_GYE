@@ -28,6 +28,9 @@
               <div class="product-bottom"><strong>{{ product.price | currency:'USD':'symbol':'1.2-2' }}</strong>
                 <span class="stock" [class.sold-out]="product.stock === 0">{{ product.stock > 0 ? product.stock + ' disponibles' : 'Agotado' }}</span>
               </div>
+              <button mat-flat-button class="add-product" [disabled]="product.stock === 0 || adding() !== null" (click)="add(product)">
+                {{ adding() === product.id ? 'Agregando…' : product.stock === 0 ? 'Sin stock' : 'Agregar al carrito' }}
+              </button>
             </mat-card-content>
           </mat-card>
         }

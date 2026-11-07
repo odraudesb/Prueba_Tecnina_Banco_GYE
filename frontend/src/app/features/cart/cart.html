@@ -1,0 +1,42 @@
+<main class="page">
+  <div class="section-heading"><div><span class="eyebrow">TUS ELEGIDOS</span><h1>Mi carrito</h1><p>Revisa las cantidades antes de confirmar tu compra.</p></div><a mat-stroked-button routerLink="/productos">Seguir comprando</a></div>
+  @if (loading() || busy()) { <mat-progress-bar mode="indeterminate" aria-label="Actualizando carrito" /> }
+  @if (failed()) {
+    <section class="empty-state"><h2>No pudimos cargar tu carrito</h2><p>Inténtalo de nuevo para ver tus productos.</p><button mat-flat-button (click)="load()">Reintentar</button></section>
+  } @else if (cart(); as current) {
+    @if (!current.items.length) {
+      <section class="empty-state"><span class="empty-mark" aria-hidden="true">＋</span><h2>Tu carrito está vacío</h2><p>Explora el catálogo y encuentra algo que te guste.</p><a mat-flat-button routerLink="/productos">Ver productos</a></section>
+    } @else {
+      <div class="cart-layout" [attr.aria-busy]="busy()">
+        <section class="cart-items" aria-label="Productos del carrito">
+          @for (line of current.items; track line.productId) {
+            <article class="cart-line">
+              <div class="line-mark" aria-hidden="true">{{ line.name.charAt(0) }}</div>
+              <div class="line-info"><span class="code">{{ line.code }}</span><h2>{{ line.name }}</h2><p>{{ line.unitPrice | currency:'USD' }} por unidad</p>
+                @if (line.quantity > line.stock) { <p class="stock-error">Quedan {{ line.stock }} unidades. Ajusta la cantidad o quita el producto.</p> }
+              </div>
+              <div class="line-controls">
+                <div class="quantity">
+                  <button mat-button [attr.aria-label]="'Disminuir cantidad de ' + line.name" [disabled]="busy() || line.quantity <= 1" (click)="update(line, line.quantity - 1)">−</button>
+                  <input type="number" min="1" [max]="line.stock" [value]="line.quantity" [disabled]="busy()" [attr.aria-label]="'Cantidad de ' + line.name" (change)="updateInput(line, $event)">
+                  <button mat-button [attr.aria-label]="'Aumentar cantidad de ' + line.name" [disabled]="busy() || line.quantity >= line.stock" (click)="update(line, line.quantity + 1)">+</button>
+                </div>
+                <strong>{{ line.subtotal | currency:'USD' }}</strong>
+                <button mat-button [disabled]="busy()" (click)="remove(line)" [attr.aria-label]="'Quitar ' + line.name">Quitar</button>
+              </div>
+            </article>
+          }
+          <button mat-button class="clear-cart" [disabled]="busy()" (click)="clear()">Vaciar carrito</button>
+        </section>
+        <aside class="summary">
+          <span class="eyebrow">YA CASI ES TUYO</span><h2>Resumen de compra</h2>
+          <div class="amount"><span>Subtotal</span><span>{{ current.subtotal | currency:'USD' }}</span></div>
+          <div class="amount"><span>Descuento {{ current.discount > 0 ? '(10 %)' : '' }}</span><span>−{{ current.discount | currency:'USD' }}</span></div>
+          <div class="amount total"><strong>Total</strong><strong>{{ current.total | currency:'USD' }}</strong></div>
+          <p class="discount-note">Tienes un 10 % de descuento cuando el subtotal supera los $100.</p>
+          <p class="summary-note">El stock se confirma al realizar la compra.</p>
+        </aside>
+      </div>
+    }
+  }
+</main>

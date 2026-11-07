@@ -28,6 +28,13 @@ En la carpeta `backend`, `.\iniciar.ps1` prepara la base y levanta la API. El us
 
 Busca un producto por nombre, código o categoría. La pantalla muestra el precio y el stock que devuelve la API. Una búsqueda sin coincidencias muestra un mensaje. Si la API no responde, puedes reintentar la carga.
 
+## Revisar el carrito
+
+1. Agrega un producto desde el catálogo y abre **Mi carrito**.
+2. Cambia la cantidad con los botones o el campo numérico. El total se actualiza con la respuesta de la API.
+3. Con un teclado y un mouse, el subtotal es $100 y el descuento es $0. Con un teclado y dos mouse, el subtotal es $130, el descuento $13 y el total $117.
+4. Revisa los mensajes de stock insuficiente. Puedes quitar productos o vaciar el carrito, previa confirmación.
+
 El token se conserva en sessionStorage y se elimina al cerrar sesión o vencer. La API autoriza cada solicitud. Fuera del ambiente local, el frontend y el backend requieren HTTPS.
 
 Para generar la versión de producción, ejecuta `npm run build`.

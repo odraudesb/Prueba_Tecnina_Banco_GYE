@@ -18,6 +18,10 @@ export const routes: Routes = [
         path: 'productos',
         loadComponent: () => import('./features/products/products').then(module => module.Products),
       },
+      {
+        path: 'carrito',
+        loadComponent: () => import('./features/cart/cart').then(module => module.Cart),
+      },
       { path: 'inicio', redirectTo: 'productos', pathMatch: 'full' },
       { path: '', redirectTo: 'productos', pathMatch: 'full' },
     ],
