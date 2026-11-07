@@ -11,6 +11,13 @@ public sealed class ShopDbContext(DbContextOptions<ShopDbContext> options) : DbC
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
+    public async Task LockCartAsync(int userId, CancellationToken cancellationToken)
+    {
+        await Database.SqlQuery<int>(
+                $"SELECT [Id] AS [Value] FROM [dbo].[Users] WITH (UPDLOCK, HOLDLOCK) WHERE [Id] = {userId}")
+            .SingleAsync(cancellationToken);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var users = modelBuilder.Entity<User>();

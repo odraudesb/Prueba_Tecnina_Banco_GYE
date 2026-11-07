@@ -50,3 +50,13 @@ sqlcmd -S localhost -E -C -d PruebaTecnicaCarrito -Q "SELECT Email FROM dbo.User
 4. Usa un ID que no exista para comprobar el `404`. Cierra la autorización en Swagger y vuelve a consultar el catálogo para comprobar el `401`.
 
 Los tokens duran una hora. Si no defines `Jwt__Key` en desarrollo, se genera una clave en memoria y tendrás que iniciar sesión otra vez después de reiniciar la API. Fuera de desarrollo configura `Jwt__Key` con una clave aleatoria de al menos 32 bytes y `ConnectionStrings__Shop` con la cadena de conexión del ambiente.
+
+## Probar el carrito
+
+1. Inicia sesión, autoriza Swagger y consulta `GET /api/products` para obtener los IDs de `TEC-001` y `TEC-002`.
+2. Agrega una unidad de cada producto con `POST /api/cart/items`, enviando `productId` y `quantity`. El subtotal debe ser `100.00` y el descuento `0.00`.
+3. Cambia la cantidad de `TEC-002` a dos con `PUT /api/cart/items/{productId}` y un cuerpo `{"quantity":2}`. El subtotal debe ser `130.00`, el descuento `13.00` y el total `117.00`.
+4. Envía una cantidad superior al stock. Debe responder `409` y conservar la cantidad anterior.
+5. Consulta `GET /api/cart`, elimina una línea con `DELETE /api/cart/items/{productId}` y vacía el resto con `DELETE /api/cart`.
+
+Agregar una línea existente suma unidades. Actualizarla reemplaza su cantidad. El carrito consulta el stock disponible sin reservar unidades.
