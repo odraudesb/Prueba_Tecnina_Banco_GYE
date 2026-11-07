@@ -1,0 +1,28 @@
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+
+:root {
+  color-scheme: light;
+  --mat-sys-primary: #285741;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #d9efc3;
+  --mat-sys-on-primary-container: #183f32;
+  --mat-sys-surface: #fafbf8;
+  --mat-sys-on-surface: #1e3027;
+  --mat-sys-outline: #abb9ad;
+  --mat-sys-label-large-font: 'Segoe UI', sans-serif;
+  --mat-sys-body-large-font: 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #21362b; background: #f7f9f4; }
+button, input { font: inherit; }
+a { color: inherit; }
+.page { max-width: 1160px; margin: auto; padding: 42px 24px 70px; min-height: calc(100dvh - 170px); }
+.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 15px 0 25px; }
+.section-heading h1 { margin: 14px 0 12px; font-size: clamp(30px, 4vw, 42px); letter-spacing: -1.4px; font-weight: 600; }
+.section-heading p { color: #73806b; line-height: 1.6; font-size: 14px; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: #56714e; }
+.empty-state { padding: 70px 24px; text-align: center; }
+.empty-state h2 { font-size: 24px; font-weight: 550; }
+.empty-state p { color: #77836e; line-height: 1.6; margin-bottom: 25px; }
+.empty-mark { display: grid; place-items: center; width: 64px; height: 64px; background: #e5eedb; border-radius: 50%; margin: auto; font-size: 28px; color: #52704a; }
+@media (max-width: 600px) { .section-heading { align-items: flex-start; flex-direction: column; gap: 12px; } .page { padding: 24px 20px 50px; } }

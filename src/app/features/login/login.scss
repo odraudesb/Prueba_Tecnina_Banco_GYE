@@ -1,0 +1,40 @@
+.login-page { min-height: 100dvh; display: grid; grid-template-columns: 1.05fr 1fr; }
+.welcome { position: relative; background: #132c30; color: #f7fbf8; padding: 40px clamp(32px, 5vw, 88px); display: flex; flex-direction: column; overflow: hidden; }
+.welcome::after { content: ''; width: 350px; height: 350px; border: 1px solid #ffffff12; border-radius: 50%; position: absolute; right: -200px; top: 160px; pointer-events: none; box-shadow: 0 0 0 65px #ffffff05, 0 0 0 130px #ffffff03; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; font-size: 27px; font-weight: 700; letter-spacing: -1px; width: fit-content; }
+.brand-mark { width: 35px; height: 35px; background: #c7ed91; color: #132c30; display: grid; place-items: center; border-radius: 10px; }
+.brand-dot { color: #c7ed91; margin-left: -10px; }
+.welcome-content { margin: auto 0; padding: 65px 0; position: relative; z-index: 1; }
+.eyebrow, .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.eyebrow { color: #c7ed91; }
+h1 { font-size: clamp(42px, 4.2vw, 68px); line-height: 1.08; letter-spacing: -2.5px; font-weight: 500; margin: 25px 0; }
+h1 span { color: #c7ed91; }
+.welcome-content > p { max-width: 320px; color: #b6c6c5; line-height: 1.8; font-size: 15px; }
+.benefits { margin-top: 35px; }
+.benefits div { display: flex; gap: 16px; align-items: center; }
+.benefits span { font-size: 10px; color: #a9bdb8; border: 1px solid #44615e; border-radius: 50%; padding: 7px; }
+.benefits p { font-size: 13px; margin: 10px 0; }
+footer { font-size: 11px; color: #a2b8b1; }
+.access { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; background: #fafbf8; }
+.login-box { width: min(100%, 390px); margin: auto 0; padding: 60px 0; }
+.section-label { color: #597567; }
+h2 { font-size: clamp(28px, 3vw, 37px); margin: 18px 0 12px; letter-spacing: -1.3px; font-weight: 600; }
+.intro { color: #6b7771; font-size: 15px; margin-bottom: 36px; }
+form { display: flex; flex-direction: column; gap: 12px; }
+mat-form-field { width: 100%; }
+.submit { min-height: 52px; width: 100%; margin-top: 4px; }
+.submit span + span { margin-left: 24px; }
+mat-spinner { display: inline-block; vertical-align: middle; margin-right: 12px; }
+.access-note { text-align: center; color: #7b867f; font-size: 12px; margin-top: 24px; }
+.access footer { color: #87938b; }
+@media (max-width: 760px) {
+  .login-page { grid-template-columns: 1fr; }
+  .welcome { padding: 24px; }
+  .welcome-content { padding: 35px 0 15px; }
+  h1 { font-size: 40px; margin: 15px 0; }
+  h1 br { display: none; }
+  .welcome-content > p { max-width: 440px; }
+  .benefits, .welcome footer { display: none; }
+  .access { padding: 30px 24px; }
+  .login-box { padding: 12px 0 30px; }
+}

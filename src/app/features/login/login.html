@@ -1,0 +1,54 @@
+<main class="login-page">
+  <section class="welcome" aria-label="Bienvenida">
+    <a class="brand" href="/login" aria-label="Tienda, inicio"><span class="brand-mark">t</span>tienda<span class="brand-dot">.</span></a>
+    <div class="welcome-content">
+      <span class="eyebrow">TU PRÓXIMA BUENA COMPRA</span>
+      <h1>Todo empieza <br>con algo que <br><span>te gusta.</span></h1>
+      <p>Encuentra productos para tu día a día y reúne tus favoritos en un solo lugar.</p>
+      <div class="benefits">
+        <div><span>01</span><p>Explora el catálogo</p></div>
+        <div><span>02</span><p>Elige lo que necesitas</p></div>
+        <div><span>03</span><p>Revisa y confirma tu compra</p></div>
+      </div>
+    </div>
+    <footer>Una forma sencilla de comprar.</footer>
+  </section>
+
+  <section class="access">
+    <div class="login-box">
+      <span class="section-label">TU CUENTA</span>
+      <h2>Qué bueno verte.</h2>
+      <p class="intro">Ingresa tus datos para continuar.</p>
+      <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="pending()">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="username" maxlength="254" placeholder="nombre@correo.com">
+          @if (form.controls.email.hasError('required')) {
+            <mat-error>Ingresa tu correo.</mat-error>
+          } @else {
+            <mat-error>Ingresa un correo válido.</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" maxlength="256">
+          <button mat-button matSuffix type="button" (click)="showPassword.set(!showPassword())"
+            [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            {{ showPassword() ? 'Ocultar' : 'Ver' }}
+          </button>
+          <mat-error>Ingresa tu contraseña.</mat-error>
+        </mat-form-field>
+        <button mat-flat-button class="submit" type="submit" [disabled]="pending()">
+          @if (pending()) {
+            <mat-spinner diameter="20" aria-label="Iniciando sesión" />
+            <span>Ingresando…</span>
+          } @else {
+            <span>Iniciar sesión</span><span aria-hidden="true">↗</span>
+          }
+        </button>
+      </form>
+      <p class="access-note">Usa el correo y la contraseña de tu cuenta.</p>
+    </div>
+    <footer>Tu próxima compra, a un paso.</footer>
+  </section>
+</main>
