@@ -60,3 +60,15 @@ Los tokens duran una hora. Si no defines `Jwt__Key` en desarrollo, se genera una
 5. Consulta `GET /api/cart`, elimina una línea con `DELETE /api/cart/items/{productId}` y vacía el resto con `DELETE /api/cart`.
 
 Agregar una línea existente suma unidades. Actualizarla reemplaza su cantidad. El carrito consulta el stock disponible sin reservar unidades.
+
+## Confirmar una compra
+
+1. Agrega productos al carrito y revisa el total en `GET /api/cart`.
+2. Ejecuta `POST /api/orders` sin cuerpo. La respuesta `201` contiene la orden y su detalle.
+3. Abre la dirección de la cabecera `Location` para consultar la orden. Vuelve a consultar el carrito y el catálogo para ver el carrito vacío y el stock actualizado.
+
+Si el carrito está vacío o el stock cambió y ya no alcanza, la API devuelve `409`. La orden, el stock y el carrito se guardan juntos en una transacción.
+
+## Consultar compras
+
+Ejecuta `GET /api/orders` para ver tus compras de la más reciente a la más antigua. Si todavía no tienes compras, devuelve una lista vacía. Usa el ID de una compra en `GET /api/orders/{id}` para ver sus productos, precios y cantidades. Una orden que no te pertenece devuelve `404`.
