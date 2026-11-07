@@ -40,7 +40,7 @@ export class Login {
       finalize(() => this.pending.set(false)),
     ).subscribe({
       next: () => {
-        void this.router.navigateByUrl('/inicio');
+        void this.router.navigateByUrl('/productos');
         this.notifications.show('Bienvenido', 'Iniciaste sesión correctamente.');
       },
       error: () => {},

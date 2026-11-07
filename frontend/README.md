@@ -19,10 +19,14 @@ En la carpeta `backend`, `.\iniciar.ps1` prepara la base y levanta la API. El us
 
 1. Ingresa un correo inválido y revisa el mensaje bajo el campo.
 2. Usa una contraseña incorrecta. Aparece un diálogo que explica el error.
-3. Inicia sesión con el usuario demo. Aparece la bienvenida y se abre la pantalla de tu cuenta.
+3. Inicia sesión con el usuario demo. Aparece la bienvenida y se abre el catálogo.
 4. Recarga la página. La sesión se conserva en la misma pestaña.
 5. Cierra sesión. Aparece una confirmación y regresas al formulario.
-6. Intenta entrar a `/inicio` después de cerrar sesión. Debe regresar al login.
+6. Intenta entrar a `/productos` después de cerrar sesión. Debe regresar al login.
+
+## Revisar el catálogo
+
+Busca un producto por nombre, código o categoría. La pantalla muestra el precio y el stock que devuelve la API. Una búsqueda sin coincidencias muestra un mensaje. Si la API no responde, puedes reintentar la carga.
 
 El token se conserva en sessionStorage y se elimina al cerrar sesión o vencer. La API autoriza cada solicitud. Fuera del ambiente local, el frontend y el backend requieren HTTPS.
 

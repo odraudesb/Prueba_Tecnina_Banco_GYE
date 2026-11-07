@@ -1,0 +1,37 @@
+<main>
+  <div class="page-heading">
+    <div><span class="eyebrow">ENCUENTRA TU PRÓXIMO FAVORITO</span><h1>Pequeñas cosas.<br>Buenas elecciones.</h1></div>
+    <p>Explora nuestra selección de productos<br>para tu casa y tu día a día.</p>
+  </div>
+  <section class="catalog" aria-label="Catálogo de productos" [attr.aria-busy]="loading()">
+    <div class="catalog-tools">
+      <h2>Todos los productos <span>{{ products().length }}</span></h2>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Buscar productos</mat-label>
+        <input matInput [formControl]="search" placeholder="Nombre, código o categoría" maxlength="120" type="search">
+      </mat-form-field>
+    </div>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Cargando productos" />
+    } @else if (failed()) {
+      <div class="empty"><h3>No pudimos cargar el catálogo</h3><p>Inténtalo de nuevo en unos momentos.</p><button mat-stroked-button (click)="retry()">Reintentar</button></div>
+    } @else if (!products().length) {
+      <div class="empty"><h3>No encontramos productos</h3><p>Prueba con otro nombre, código o categoría.</p></div>
+    } @else {
+      <div class="product-grid">
+        @for (product of products(); track product.id) {
+          <mat-card appearance="outlined">
+            <div class="product-art" aria-hidden="true"><span>{{ product.name.charAt(0) }}</span><small>{{ product.category }}</small></div>
+            <mat-card-content>
+              <p class="product-code">{{ product.code }}</p>
+              <h3>{{ product.name }}</h3>
+              <div class="product-bottom"><strong>{{ product.price | currency:'USD':'symbol':'1.2-2' }}</strong>
+                <span class="stock" [class.sold-out]="product.stock === 0">{{ product.stock > 0 ? product.stock + ' disponibles' : 'Agotado' }}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </section>
+</main>

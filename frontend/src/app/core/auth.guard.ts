@@ -6,4 +6,4 @@ export const authGuard: CanActivateFn = () =>
   inject(AuthService).token ? true : inject(Router).createUrlTree(['/login']);
 
 export const guestGuard: CanActivateFn = () =>
-  inject(AuthService).token ? inject(Router).createUrlTree(['/inicio']) : true;
+  inject(AuthService).token ? inject(Router).createUrlTree(['/productos']) : true;

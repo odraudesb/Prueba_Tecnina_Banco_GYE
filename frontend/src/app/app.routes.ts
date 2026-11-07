@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from './core/auth.guard';
+import { StoreShell } from './shared/store-shell';
 
 export const routes: Routes = [
   {
@@ -8,10 +9,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/login/login').then(module => module.Login),
   },
   {
-    path: 'inicio',
+    path: '',
+    component: StoreShell,
     canActivate: [authGuard],
-    loadComponent: () => import('./features/account/account').then(module => module.Account),
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'productos',
+        loadComponent: () => import('./features/products/products').then(module => module.Products),
+      },
+      { path: 'inicio', redirectTo: 'productos', pathMatch: 'full' },
+      { path: '', redirectTo: 'productos', pathMatch: 'full' },
+    ],
   },
-  { path: '', pathMatch: 'full', redirectTo: 'inicio' },
-  { path: '**', redirectTo: 'inicio' },
+  { path: '**', redirectTo: 'productos' },
 ];
