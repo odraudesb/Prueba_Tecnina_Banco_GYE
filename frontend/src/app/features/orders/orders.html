@@ -1,0 +1,21 @@
+<main class="page">
+  <div class="section-heading"><div><span class="eyebrow">TODO EN UN SOLO LUGAR</span><h1>Mis compras</h1><p>Revisa tus compras y el detalle de cada una.</p></div><a mat-stroked-button routerLink="/productos">Volver al catálogo</a></div>
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Cargando compras" />
+  } @else if (failed()) {
+    <section class="empty-state"><h2>No pudimos cargar tus compras</h2><p>Inténtalo de nuevo en unos momentos.</p><button mat-flat-button (click)="load()">Reintentar</button></section>
+  } @else if (!orders().length) {
+    <section class="empty-state"><span class="empty-mark" aria-hidden="true">↗</span><h2>Tu primera compra te espera</h2><p>Las compras que realices aparecerán aquí.</p><a mat-flat-button routerLink="/productos">Explorar productos</a></section>
+  } @else {
+    <div class="order-list">
+      @for (order of orders(); track order.id) {
+        <article class="order-row">
+          <div class="order-number"><span class="eyebrow">COMPRA</span><h2>#{{ order.id }}</h2></div>
+          <div class="order-date"><span class="label">Fecha</span><p>{{ order.createdAt | date:'dd/MM/yyyy · HH:mm' }}</p></div>
+          <div class="order-amount"><span class="label">Total</span><p>{{ order.total | currency:'USD' }}</p></div>
+          <a mat-stroked-button [routerLink]="['/compras', order.id]" [attr.aria-label]="'Ver detalle de la compra ' + order.id">Ver detalle ↗</a>
+        </article>
+      }
+    </div>
+  }
+</main>

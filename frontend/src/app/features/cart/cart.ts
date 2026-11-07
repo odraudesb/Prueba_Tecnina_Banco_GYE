@@ -2,14 +2,16 @@ import { CurrencyPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Observable, finalize } from 'rxjs';
 import { CartLine, CartResponse, CartService } from './cart.service';
+import { OrderService } from '../orders/order.service';
 import { NotificationService } from '../../core/notification.service';
 import { ConfirmDialog } from '../../shared/confirm-dialog';
+import { CheckoutDialog } from './checkout-dialog';
 
 @Component({
   selector: 'app-cart',
@@ -19,8 +21,10 @@ import { ConfirmDialog } from '../../shared/confirm-dialog';
 })
 export class Cart {
   private readonly service = inject(CartService);
+  private readonly orders = inject(OrderService);
   private readonly notifications = inject(NotificationService);
   private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   readonly cart = signal<CartResponse | null>(null);
   readonly loading = signal(false);
@@ -74,6 +78,28 @@ export class Cart {
       if (confirmed && !this.busy()) {
         this.change(this.service.clear(), 'Carrito vacío', 'Quitaste todos los productos del carrito.');
       }
+    });
+  }
+
+  checkout(): void {
+    const cart = this.cart();
+    if (!cart?.items.length || this.busy()) return;
+    this.dialog.open(CheckoutDialog, {
+      data: cart,
+      width: '560px',
+      maxWidth: 'calc(100vw - 32px)',
+    }).afterClosed().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(confirmed => {
+      if (!confirmed || this.busy()) return;
+      this.busy.set(true);
+      this.orders.checkout().pipe(finalize(() => this.busy.set(false))).subscribe({
+        next: order => {
+          void this.router.navigate(['/compras', order.id]);
+          this.notifications.show('Compra realizada', `Tu compra #${order.id} quedó registrada. Puedes consultar el detalle en Mis compras.`);
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 409) this.load();
+        },
+      });
     });
   }
 

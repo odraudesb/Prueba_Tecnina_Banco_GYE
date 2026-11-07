@@ -13,6 +13,7 @@ import { NotificationService } from '../core/notification.service';
       <nav aria-label="Menú principal">
         <a routerLink="/productos" routerLinkActive="active" mat-button>Catálogo</a>
         <a routerLink="/carrito" routerLinkActive="active" mat-button>Mi carrito</a>
+        <a routerLink="/compras" routerLinkActive="active" mat-button>Mis compras</a>
       </nav>
       <button mat-stroked-button (click)="logout()">Cerrar sesión</button>
     </header>

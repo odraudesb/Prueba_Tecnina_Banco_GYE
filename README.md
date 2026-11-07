@@ -33,6 +33,6 @@ npm start
 
 La aplicación abre en http://localhost:4200. El usuario de demostración es `demo@shop.local` con contraseña `CarritoDemo2026!` si se creó con los valores predeterminados.
 
-El frontend incluye login, catálogo y carrito. Los pasos de revisión están en [el README del frontend](frontend/README.md).
+El frontend incluye login, catálogo, carrito, confirmación de compra e historial con detalle de cada orden. Los pasos de revisión están en [el README del frontend](frontend/README.md).
 
 La configuración y los endpoints de la API se detallan en [el README del backend](backend/README.md).

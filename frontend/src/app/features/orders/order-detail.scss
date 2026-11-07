@@ -1,0 +1,12 @@
+.order-status { color: #3c6b45; background: #e6efdd; border-radius: 20px; padding: 10px 16px; font-size: 12px; }
+.order-detail { background: #fff; border: 1px solid #dfe6da; border-radius: 14px; padding: 30px; margin-top: 25px; }
+.order-detail > h2 { font-size: 18px; margin: 0 0 15px; }
+.detail-line { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 20px 0; border-bottom: 1px solid #e5eadf; }
+.detail-line h3 { font-size: 16px; margin: 0 0 8px; }
+.detail-line p { font-size: 13px; color: #74806c; margin: 0; }
+.detail-line strong { white-space: nowrap; }
+.totals { margin: 25px 0 0 auto; width: min(100%, 330px); }
+.totals > div { display: flex; justify-content: space-between; margin: 18px 0; font-size: 14px; }
+.totals .total { padding-top: 20px; border-top: 1px solid #dfe6da; font-size: 22px; }
+.detail-actions { display: flex; justify-content: flex-end; margin-top: 25px; }
+@media (max-width: 500px) { .order-detail { padding: 22px; } }

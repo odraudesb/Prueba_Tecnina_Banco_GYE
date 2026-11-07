@@ -1,0 +1,25 @@
+<main class="page">
+  <a mat-button routerLink="/compras">← Mis compras</a>
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" aria-label="Cargando detalle de compra" />
+  } @else if (order(); as current) {
+    <div class="section-heading"><div><span class="eyebrow">EL DETALLE DE TUS ELEGIDOS</span><h1>Compra #{{ current.id }}</h1><p>Realizada el {{ current.createdAt | date:'dd/MM/yyyy' }} a las {{ current.createdAt | date:'HH:mm' }}</p></div><span class="order-status">Compra registrada</span></div>
+    <section class="order-detail">
+      <h2>Productos comprados</h2>
+      @for (item of current.items; track item.productId) {
+        <article class="detail-line">
+          <div><h3>{{ item.productName }}</h3><p>{{ item.quantity }} {{ item.quantity === 1 ? 'unidad' : 'unidades' }} × {{ item.unitPrice | currency:'USD' }}</p></div>
+          <strong>{{ item.subtotal | currency:'USD' }}</strong>
+        </article>
+      }
+      <div class="totals">
+        <div><span>Subtotal</span><span>{{ current.subtotal | currency:'USD' }}</span></div>
+        <div><span>Descuento</span><span>−{{ current.discount | currency:'USD' }}</span></div>
+        <div class="total"><strong>Total</strong><strong>{{ current.total | currency:'USD' }}</strong></div>
+      </div>
+    </section>
+    <div class="detail-actions"><a mat-flat-button routerLink="/productos">Volver a comprar</a></div>
+  } @else {
+    <section class="empty-state"><h2>No pudimos mostrar esta compra</h2><p>Revisa que la compra exista y pertenezca a tu cuenta.</p><button mat-stroked-button (click)="retry()">Reintentar</button></section>
+  }
+</main>

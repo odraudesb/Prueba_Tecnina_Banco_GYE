@@ -34,6 +34,7 @@
           <div class="amount"><span>Descuento {{ current.discount > 0 ? '(10 %)' : '' }}</span><span>−{{ current.discount | currency:'USD' }}</span></div>
           <div class="amount total"><strong>Total</strong><strong>{{ current.total | currency:'USD' }}</strong></div>
           <p class="discount-note">Tienes un 10 % de descuento cuando el subtotal supera los $100.</p>
+          <button mat-flat-button class="checkout" [disabled]="busy() || loading()" (click)="checkout()">{{ busy() ? 'Procesando…' : 'Revisar y comprar' }}</button>
           <p class="summary-note">El stock se confirma al realizar la compra.</p>
         </aside>
       </div>

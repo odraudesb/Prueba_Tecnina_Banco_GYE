@@ -21,8 +21,11 @@ export const apiInterceptor: HttpInterceptorFn = (request, next) => {
       if (error.status === 401 && !isLogin) {
         auth.expire();
       } else {
+        const isCheckout = request.method === 'POST' && request.url === `${environment.apiUrl}/orders`;
         const messages: Record<number, string> = {
-          0: 'No pudimos conectar con la tienda. Revisa tu conexión e inténtalo de nuevo.',
+          0: isCheckout
+            ? 'Se perdió la conexión y no pudimos confirmar el resultado. Revisa Mis compras antes de volver a comprar.'
+            : 'No pudimos conectar con la tienda. Revisa tu conexión e inténtalo de nuevo.',
           400: 'Revisa los datos e inténtalo de nuevo.',
           401: 'El correo o la contraseña son incorrectos.',
           403: 'Tu cuenta no tiene permiso para realizar esta acción.',

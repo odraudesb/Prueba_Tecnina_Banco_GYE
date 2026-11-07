@@ -22,6 +22,14 @@ export const routes: Routes = [
         path: 'carrito',
         loadComponent: () => import('./features/cart/cart').then(module => module.Cart),
       },
+      {
+        path: 'compras',
+        loadComponent: () => import('./features/orders/orders').then(module => module.Orders),
+      },
+      {
+        path: 'compras/:id',
+        loadComponent: () => import('./features/orders/order-detail').then(module => module.OrderDetail),
+      },
       { path: 'inicio', redirectTo: 'productos', pathMatch: 'full' },
       { path: '', redirectTo: 'productos', pathMatch: 'full' },
     ],

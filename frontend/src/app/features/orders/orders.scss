@@ -1,0 +1,8 @@
+.order-list { border: 1px solid #e0e5dc; border-radius: 14px; background: #fff; margin-top: 30px; overflow: hidden; }
+.order-row { display: grid; grid-template-columns: 1fr 1.5fr 1fr auto; gap: 24px; align-items: center; padding: 26px 30px; border-bottom: 1px solid #e8ece4; }
+.order-row:last-child { border: 0; }
+.order-number h2 { margin: 8px 0 0; font-size: 24px; }
+.label { font-size: 11px; color: #7b8675; }
+.order-row p { margin: 8px 0 0; font-size: 14px; }
+.order-amount p { font-size: 20px; font-weight: 650; }
+@media (max-width: 700px) { .order-row { grid-template-columns: 1fr 1fr; padding: 22px; } .order-row a { justify-self: start; } }
