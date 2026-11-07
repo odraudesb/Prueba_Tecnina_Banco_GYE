@@ -36,3 +36,13 @@ La aplicación abre en http://localhost:4200. El usuario de demostración es `de
 El frontend incluye login, catálogo, carrito, confirmación de compra e historial con detalle de cada orden. Los pasos de revisión están en [el README del frontend](frontend/README.md).
 
 La configuración y los endpoints de la API se detallan en [el README del backend](backend/README.md).
+
+## Evidencia y versión de entrega
+
+La captura de [Swagger](docs/swagger.jpg) muestra los endpoints disponibles. El [documento OpenAPI](docs/openapi.json) permite consultar sus entradas, salidas y requisitos de autenticación.
+
+La versión entregada está identificada por el tag `v1.0.0`. Para revisar esa versión después de clonar el repositorio:
+
+```powershell
+git checkout v1.0.0
+```
