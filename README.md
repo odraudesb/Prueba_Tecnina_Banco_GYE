@@ -11,7 +11,7 @@ dotnet build Shop.Api
 dotnet run --project Shop.Api
 ```
 
-- Swagger UI en http://localhost:5080/swagger
+- El perfil local abre Swagger en el navegador predeterminado. También puedes abrir http://localhost:5080/ para ir a Swagger.
 - Documento OpenAPI en http://localhost:5080/swagger/v1/swagger.json
 - `GET /api/health` responde con HTTP 200 y `{"status":"ok"}`
 
