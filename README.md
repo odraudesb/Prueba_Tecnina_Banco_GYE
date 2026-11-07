@@ -41,3 +41,12 @@ Si tienes `sqlcmd`, puedes comprobar los datos en la instancia local:
 ```powershell
 sqlcmd -S localhost -E -C -d PruebaTecnicaCarrito -Q "SELECT Email FROM dbo.Users; SELECT Code, Name, Price, Stock FROM dbo.Products;"
 ```
+
+## Probar login y catálogo en Swagger
+
+1. Ejecuta `dotnet run --project Shop.Api` después de preparar la base.
+2. En `POST /api/auth/login`, envía el correo `demo@shop.local` y la contraseña que elegiste al cargar los datos. Una respuesta `200` contiene `accessToken`.
+3. Pulsa **Authorize**, pega el token y confirma. Ejecuta `GET /api/products` con `search=TEC-001` y prueba `GET /api/products/{id}` con el ID que devuelve la búsqueda.
+4. Usa un ID que no exista para comprobar el `404`. Cierra la autorización en Swagger y vuelve a consultar el catálogo para comprobar el `401`.
+
+Los tokens duran una hora. Si no defines `Jwt__Key` en desarrollo, se genera una clave en memoria y tendrás que iniciar sesión otra vez después de reiniciar la API. Fuera de desarrollo configura `Jwt__Key` con una clave aleatoria de al menos 32 bytes y `ConnectionStrings__Shop` con la cadena de conexión del ambiente.
