@@ -7,15 +7,24 @@ API REST en ASP.NET Core 8.
 Desde la raíz de este repositorio, con el SDK de .NET 8 instalado:
 
 ```powershell
-dotnet build Shop.Api
-dotnet run --project Shop.Api
+.\iniciar.ps1
 ```
+
+El script requiere SQL Server en ejecución y una cuenta con permisos para crear la base. Restaura las dependencias, aplica la migración, carga los datos de prueba y levanta la API. Al crear el usuario demo por primera vez usa `demo@shop.local` y `CarritoDemo2026!`, una contraseña de demostración local. Puedes elegir otra mediante `Demo__Password`. Si el usuario ya existe, conserva su contraseña.
+
+Para preparar únicamente la base, ejecuta `.\iniciar.ps1 -SoloPreparar`. Después puedes iniciar la API con `dotnet run --project Shop.Api`.
 
 - El perfil local abre Swagger en el navegador predeterminado. También puedes abrir http://localhost:5080/ para ir a Swagger.
 - Documento OpenAPI en http://localhost:5080/swagger/v1/swagger.json
 - `GET /api/health` responde con HTTP 200 y `{"status":"ok"}`
 
 Swagger está disponible en el ambiente de desarrollo. El endpoint de salud comprueba que la API responde.
+
+## Conexión desde Angular
+
+La dirección base de la API es `http://localhost:5080/api`. La configuración de desarrollo permite solicitudes desde `http://localhost:4200`. El cliente debe enviar el token del login en la cabecera `Authorization: Bearer TOKEN`.
+
+Si el frontend usa otra dirección, cambia la lista `Cors:AllowedOrigins`. Los permisos CORS se aplican antes de la autenticación.
 
 ## Preparar la base de datos
 

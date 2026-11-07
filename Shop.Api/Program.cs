@@ -20,6 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ShopRequestExceptionHandler>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+        policy.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -32,14 +40,14 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddDbContext<ShopDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("Shop")
-    ?? throw new InvalidOperationException("Configura ConnectionStrings:Shop.")));
+    ?? throw new InvalidOperationException("Falta la cadena de conexión ConnectionStrings:Shop.")));
 
 var configuredKey = builder.Configuration["Jwt:Key"];
 var keyBytes = string.IsNullOrWhiteSpace(configuredKey) && builder.Environment.IsDevelopment()
     ? RandomNumberGenerator.GetBytes(32)
     : Encoding.UTF8.GetBytes(configuredKey ?? string.Empty);
 if (keyBytes.Length < 32)
-    throw new InvalidOperationException("Configura Jwt__Key con una clave aleatoria de al menos 32 bytes.");
+    throw new InvalidOperationException("La clave Jwt:Key debe tener al menos 32 bytes.");
 
 var signingKey = new SymmetricSecurityKey(keyBytes);
 builder.Services.AddSingleton(signingKey);
@@ -72,7 +80,7 @@ if (seedDemo)
 
     var password = app.Configuration["Demo:Password"];
     if (string.IsNullOrWhiteSpace(password) || password.Length < 12)
-        throw new InvalidOperationException("Configura Demo__Password con al menos 12 caracteres.");
+        throw new InvalidOperationException("La contraseña Demo:Password debe tener al menos 12 caracteres.");
 
     await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<ShopDbContext>();
@@ -114,6 +122,7 @@ if (app.Environment.IsDevelopment())
     }
 }
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
